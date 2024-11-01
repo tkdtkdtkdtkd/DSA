@@ -1,0 +1,43 @@
+//method 1
+vector<int> majorityElement(vector<int>& nums) {
+    int n=nums.size();
+    set<int>st;
+    map<int,int>mpp;
+    for(int x:nums){
+        mpp[x]++;
+        if(mpp[x]>n/3) st.insert(x);
+        if(st.size()==2) break;
+    }
+    vector<int>ans(st.begin(),st.end());
+    return ans;
+}
+
+//method 2
+vector<int> majorityElement(vector<int>& nums) {
+    int n=nums.size();
+    int ct1=0,ct2=0,ele1=INT_MIN,ele2=INT_MIN;
+    for(auto x:nums){
+        if(x==ele1) ct1++;
+        else if(x==ele2) ct2++;
+        else if(ct1==0 && x!=ele2){
+            ct1++;
+            ele1=x;
+        }
+        else if(ct2==0 && x!=ele1){
+            ct2++;
+            ele2=x;
+        }
+        else{
+            ct1--; ct2--;
+        }
+    }
+    ct1=0; ct2=0;
+    for(auto x:nums){
+        if(x==ele1) ct1++;
+        if(x==ele2) ct2++;
+    }
+    vector<int>ans;
+    if(ct1>n/3) ans.push_back(ele1);
+    if(ct2>n/3) ans.push_back(ele2);
+    return ans;
+}
