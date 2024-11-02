@@ -1,0 +1,27 @@
+//method 1
+int subarraysWithSumK(vector < int > a, int b) {
+    // Write your code here
+    int n=a.size(),ct=0;
+    for(int i=0;i<n;i++){
+        int xr=0;
+        for(int j=i;j<n;i++){
+            xr=xr^a[j];
+            if(xr==b) ct++;
+        }
+    }
+    return ct;
+}
+
+//method 2
+int subarraysWithSumK(vector < int > a, int b) {
+    // Write your code here
+    map<int,int>mpp;
+    mpp[0]++;
+    int ans=0,n=a.size(),xr=0;
+    for(int i=0;i<n;i++){
+        xr=xr^a[i];
+        ans+=mpp[xr^b];
+        mpp[xr]++;
+    }
+    return ans;
+}
