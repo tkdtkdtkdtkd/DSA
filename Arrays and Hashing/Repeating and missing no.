@@ -1,0 +1,22 @@
+//method 1
+
+//method 2
+vector<int> findTwoElement(vector<int>& arr) {
+    // code here
+    int n=arr.size(),xr=0,bitno=0;
+    for(int i=1;i<=n;i++){
+        xr^=arr[i-1]^i;
+    }
+    while((xr&(1<<bitno))==0) bitno++;
+    int one=0,zero=0;
+    for(int i=0;i<n;i++){
+        if(arr[i]&(1<<bitno)) one=one^arr[i];
+        else zero=zero^arr[i];
+        if((i+1)&(1<<bitno)) one^=(i+1);
+        else zero^=(i+1);
+    }
+    for(auto x:arr){
+        if(x==one) return {one,zero};
+    }
+    return {zero,one};
+}
